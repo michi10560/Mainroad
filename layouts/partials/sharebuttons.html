@@ -1,0 +1,42 @@
+{{- if or .Site.Params.share.tweet .Site.Params.share.hatebu .Site.Params.share.googlePlus .Site.Params.share.facebook .Site.Params.share.pocket }}
+<div class="socialButtons">
+
+    {{- if .Site.Params.share.tweet }}
+    <div class="socialBtn _twitter">
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </div>
+    {{- end }}
+
+    {{- if .Site.Params.share.googlePlus }}
+    <div class="socialBtn _googlePlus">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <div class="g-plus" data-action="share" {{ if .Site.Params.share.googlePlus_counter }}{{else}}data-annotation="none"{{end}}></div>
+    </div>
+    {{- end }}
+
+    {{- if .Site.Params.share.facebook }}
+    <div class="socialBtn _facebook">
+        {{$i := (.URL | absURL )}}
+        <iframe src="https://www.facebook.com/plugins/share_button.php?{{ (querify "href" $i ) }}&layout={{ if .Site.Params.share.facebook_counter}}button_count{{else}}button{{end}}&size=small&mobile_iframe=true&width=95&height=20&appId" width="95" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+    </div>
+    {{- end }}
+
+    {{- if .Site.Params.share.hatebu }}
+    <div class="socialBtn _hatebu">
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout={{ if .Site.Params.share.hatebu_counter }}"basic-label-counter"{{else}}"basic-label"{{end}} data-hatena-bookmark-lang={{if eq .Site.LanguageCode "ja"}}"ja"{{else}}"en"{{end}} ><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt={{if eq .Site.LanguageCode "ja"}}"このエントリーをはてなブックマークに追加"{{else}}"Add this entry to Hatena Bookmark"{{end}} width="20" height="20" style="border: none;" /></a>
+        <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </div>
+    {{- end }}
+
+    {{- if .Site.Params.share.pocket }}
+    <div class="socialBtn _pocket">
+        <a data-pocket-label="pocket" data-pocket-count={{ if .Site.Params.share.pocket_counter }}"horizontal"{{else}}"none"{{end}} class="pocket-btn" data-lang="en"></a>
+        <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </div>
+    {{- end }}
+
+
+
+</div>
+{{- end }}
