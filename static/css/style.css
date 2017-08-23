@@ -598,12 +598,12 @@ select {
 	margin: 0;
 }
 
-.post__content a {
+.post__content a, .list__excerpt a, .warning a {
 	font-weight: 700;
 	color: #e64946;
 }
 
-.post__content a:hover {
+.post__content a:hover, .list__excerpt a:hover, .warning a:hover {
 	color: #e64946;
 	text-decoration: underline;
 }
@@ -1145,4 +1145,20 @@ textarea {
 	.list__excerpt {
 		display: none;
 	}
+}
+
+/*** Share Buttons ***/
+.shareButtons {
+    margin-top: 20px;
+    padding: 16px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.shareButtons__item {
+    display: inline-block;
+    vertical-align: top;
+    height: 20px;
+    overflow-y: hidden;
+    margin-bottom: 10px;
 }

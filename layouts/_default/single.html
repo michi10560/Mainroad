@@ -1,16 +1,24 @@
 {{ partial "header.html" . }}
 
-<div class="main-content content" role="main" itemprop="mainContentOfPage">
+<main class="main-content content" role="main" itemprop="mainContentOfPage">
 	<article class="post">
 		<header class="post__header clearfix">
 			<h1 class="post__title">{{ .Title }}</h1>
 			{{- if or (not .Date.IsZero) .Params.categories }}
 			<p class="post__meta meta">
 				{{- if not .Date.IsZero }}
-				<svg class="icon icon-time" height="14" viewBox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+                <svg class="icon icon-time" height="16" viewBox="0 0 24 24" width="16" fill="#000000" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                </svg>
 				<time class="post__meta-date" datetime="{{ .Date.Format "2006-01-02T15:04:05" }}">{{.Date.Format ( .Site.Params.dateformat | default "January 02, 2006")}}</time>
 				{{- if ne .Date .Lastmod }}
-					<time class="post__meta-lastmod" datetime="{{ .Lastmod.Format "2006-01-02T15:04:05" }}"> (Last Modified: {{.Lastmod.Format ( .Site.Params.dateformat | default "January 02, 2006")}})</time>
+                <svg class="icon icon-time" height="16" viewBox="0 0 24 24" width="16" fill="#000000" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                </svg>
+				<time class="post__meta-lastmod" datetime="{{ .Lastmod.Format "2006-01-02T15:04:05" }}">{{.Lastmod.Format ( .Site.Params.dateformat | default "January 02, 2006")}}</time>
 				{{- end }}
 				{{- end }}
 				{{- if .Params.categories }}
@@ -27,14 +35,18 @@
 				<img src="{{ .Params.thumbnail | relURL }}" alt="{{ .Title }}">
 			</figure>
 			{{- end }}
+            {{- if eq .Params.usetoc true }}
+            	{{ partial "toc.html" . }}
+            {{- end }}
 			{{ .Content }}
 		</div>
+		{{ partial "sharebuttons.html" . }}
 		{{ partial "post_tags.html" . }}
 	</article>
 	{{ partial "authorbox.html" . }}
 	{{ partial "post_nav.html" . }}
 	{{ partial "comments.html" . }}
-</div>
+</main>
 
 {{ partial "sidebar.html" . }}
 {{ partial "footer.html" . }}
