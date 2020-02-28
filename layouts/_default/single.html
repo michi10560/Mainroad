@@ -1,52 +1,28 @@
-{{ partial "header.html" . }}
-
-<main class="main-content content" role="main" itemprop="mainContentOfPage">
+{{ define "main" }}
+<main class="main" role="main">
 	<article class="post">
-		<header class="post__header clearfix">
+		<header class="post__header">
 			<h1 class="post__title">{{ .Title }}</h1>
-			{{- if or (not .Date.IsZero) .Params.categories }}
-			<p class="post__meta meta">
-				{{- if not .Date.IsZero }}
-                <svg class="icon icon-time" height="16" viewBox="0 0 24 24" width="16" fill="#000000" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-                    <path d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                </svg>
-				<time class="post__meta-date" datetime="{{ .Date.Format "2006-01-02T15:04:05" }}">{{.Date.Format ( .Site.Params.dateformat | default "January 02, 2006")}}</time>
-				{{- if ne .Date .Lastmod }}
-                <svg class="icon icon-time" height="16" viewBox="0 0 24 24" width="16" fill="#000000" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
-                    <path d="M0 0h24v24H0z" fill="none"/>
-                </svg>
-				<time class="post__meta-lastmod" datetime="{{ .Lastmod.Format "2006-01-02T15:04:05" }}">{{.Lastmod.Format ( .Site.Params.dateformat | default "January 02, 2006")}}</time>
-				{{- end }}
-				{{- end }}
-				{{- if .Params.categories }}
-				<span class="post__meta-categories meta-categories">
-					<svg class="icon icon-category" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-					{{ range $index, $category := .Params.categories }}{{ if gt $index 0 }}, {{ end }}<a class="meta-categories__link" href="{{ "categories/" | relLangURL }}{{ . | urlize | lower }}" rel="category">{{ . }}</a>{{ end }}</span>
-				{{- end }}
-			</p>
+			{{- with .Params.lead }}
+			<p class="post__lead">{{ . }}</p>
+			{{- end }} {{ with partial "post_meta.html" . -}}
+			<div class="post__meta meta">{{ . }}</div>
 			{{- end }}
 		</header>
-		<div class="post__content clearfix">
-			{{- if .Params.thumbnail }}
-			<figure class="post__thumbnail">
-				<img src="{{ .Params.thumbnail | relURL }}" alt="{{ .Title }}">
-			</figure>
-			{{- end }}
-            {{- if eq .Params.usetoc true }}
-            	{{ partial "toc.html" . }}
-            {{- end }}
+		{{- if .Params.thumbnail }}
+		<figure class="post__thumbnail">
+			<img src="{{ .Params.thumbnail | relURL }}" alt="{{ .Title }}" />
+		</figure>
+		{{- end }} {{- partial "post_toc.html" . -}}
+		<div class="content post__content clearfix">
 			{{ .Content }}
 		</div>
-		{{ partial "sharebuttons.html" . }}
-		{{ partial "post_tags.html" . }}
+		{{- if .Params.tags }}
+		<footer class="post__footer">
+			{{ partial "post_tags.html" . }}
+		</footer>
+		{{- end }}
 	</article>
-	{{ partial "authorbox.html" . }}
-	{{ partial "post_nav.html" . }}
-	{{ partial "comments.html" . }}
 </main>
-
-{{ partial "sidebar.html" . }}
-{{ partial "footer.html" . }}
+{{ partial "authorbox.html" . }} {{ partial "post_nav.html" . }} {{ partial
+"comments.html" . }} {{ end }}
